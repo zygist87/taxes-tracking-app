@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>M.J. 05 27d Final Project</title>
+  </head>
+  <body>
+
+    <div class="container-fluid">
+      <h1>Mokesčių skaičiuoklė</h1>
+
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Electricity</h5>
+        </div>
+        <div class="col-md-1">
+          <input id="electricityFrom" type="number" name="" value="" placeholder="Nuo">
+        </div>
+        <div class="col-md-1">
+          <input id="electricityTo" type="number" name="" value="" placeholder="Iki">
+        </div>
+        <div class="col-md-1">
+          <input id="electricityDifference" type="number" name="" value="" placeholder="Skirtumas">
+        </div>
+        <div class="col-md-1">
+          <input id="electricityRate" type="number" name="" value="0.13" placeholder="Tarifas">
+        </div>
+        <div class="col-md-2">
+          <div class="">
+            <button id="electricityEdit" type="button" name="button">Edit</button>
+          </div>
+        </div>
+        <div class="col-md-2" id="electricityResult">
+
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Gas</h5>
+        </div>
+        <div class="col-md-1">
+          <input id="gasFrom" type="number" name="" value="" placeholder="Nuo">
+        </div>
+        <div class="col-md-1">
+          <input id="gasTo" type="number" name="" value="" placeholder="Iki">
+        </div>
+        <div class="col-md-1">
+          <input id="gasDifference" type="number" name="" value="" placeholder="Skirtumas">
+        </div>
+        <div class="col-md-1">
+          <input id="gasRate" type="number" name="" value="0.66" placeholder="Tarifas">
+        </div>
+        <div class="col-md-2">
+          <button id="gasEdit" type="button" name="button">Edit</button>
+        </div>
+        <div class="col-md-2" id="gasResult">
+
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Gas fixed part</h5>
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-1">
+          <input id="gasFixed" type="number" name="" value="0.56" placeholder="Tarifas">
+        </div>
+        <div class="col-md-2">
+          <button id="gasFixedEdit" type="button" name="button">Edit</button>
+        </div>
+        <div class="col-md-2" id="gasFixedResult">
+
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Cold water</h5>
+        </div>
+        <div class="col-md-1">
+          <input id="waterFrom" type="number" name="" value="" placeholder="Nuo">
+        </div>
+        <div class="col-md-1">
+          <input id="waterTo" type="number" name="" value="" placeholder="Iki">
+        </div>
+        <div class="col-md-1">
+          <input id="waterDifference" type="number" name="" value="" placeholder="Skirtumas">
+        </div>
+        <div class="col-md-1">
+          <input id="waterRate" type="number" name="" value="1.36" placeholder="Tarifas">
+        </div>
+        <div class="col-md-2">
+          <button id="waterEdit" type="button" name="button">Edit</button>
+        </div>
+        <div class="col-md-2" id="waterResult">
+
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Cold water fixed part</h5>
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-1">
+          <input id="waterFixed" type="number" name="" value="1.00" placeholder="Tarifas">
+        </div>
+        <div class="col-md-2">
+          <button id="waterFixedEdit" type="button" name="button">Edit</button>
+        </div>
+        <div class="col-md-2" id="waterFixedResult">
+
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Other services</h5>
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-1">
+          <input id="otherFixed" type="number" name="" value="252" placeholder="Tarifas">
+        </div>
+        <div class="col-md-2">
+          <button id="otherEdit" type="button" name="button">Edit</button>
+        </div>
+        <div class="col-md-2" id="otherFixedResult">
+
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Heating</h5>
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-1">
+          <input id="heatingFixed" type="number" name="" value="2350" placeholder="Tarifas">
+        </div>
+        <div class="col-md-2">
+          <button id="heatingEdit" type="button" name="button">Edit</button>
+        </div>
+        <div class="col-md-2" id="heatingFixedResult">
+
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Internet</h5>
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-1">
+          <input id="internetFixed" type="number" name="" value="200" placeholder="Tarifas">
+        </div>
+        <div class="col-md-2">
+          <button id="internetEdit" type="button" name="button">Edit</button>
+        </div>
+        <div class="col-md-2" id="internetFixedResult">
+
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Total pay</h5>
+        </div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-2">
+          <button id="saveBnt" type="button" name="button">Save</button>
+        </div>
+        <div class="col-md-2" id="totalPayResult">
+
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-12">
+          <div id="outputs" class="">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <script type="text/javascript" src="assets/script/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
