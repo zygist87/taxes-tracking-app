@@ -1,15 +1,11 @@
 console.log("Projekto pradzia");
 
-let shortList = [];
-
-// let editIndex = -1; //this is for "edit" button
-// //inputs
+let listObj = [];
+//let editIndex = -1; //this is for "edit" button
 let electricityToInput = document.getElementById("electricityTo");
 let gasToInput = document.getElementById("gasTo");
 let waterToInput = document.getElementById("waterTo");
-//buttons
 let saveBtn = document.getElementById("saveBtn");
-
 
 function doesItHasValue(x) {
   if (typeof x !== "number") {
@@ -18,12 +14,88 @@ function doesItHasValue(x) {
   return x;
 };
 
-function countElectricity() {
 
-}
+function printObj() {
+  let outputs = document.getElementById("outputs");
+  outputs.innerHTML="";
+  listObj.forEach(function(val, trata) {
+    let liElement = document.createElement('li');
+    let forDate = document.createElement('span');
+    let forTotalPay = document.createElement('span');
+    // Creating and appending delete button
+    let forDelete = document.createElement("span");
+    let deleteBtn = document.createElement("button");
+    let textOnTheButton = document.createTextNode("Delete");
+    deleteBtn.appendChild(textOnTheButton);
+    forDelete.appendChild(deleteBtn);
+    // event listener for delete button
+    deleteBtn.addEventListener("click", event => {
+      console.log("paspaudziau delete", trata);
+      listObj.splice(trata, 1);
+      printObj();
+      localStorage.setItem('listObj', JSON.stringify(listObj));
+    });
+    // Creating and appending edit button
+    let forEdit = document.createElement("span");
+    let editBtn = document.createElement("button");
+    let textOnTheEdit = document.createTextNode("Edit");
+    editBtn.appendChild(textOnTheEdit);
+    forDelete.appendChild(editBtn);
+    // event listener for edit button
+    editBtn.addEventListener("click", event => {
+      console.log("paspaudziau edit", trata);
+      editIndex = trata;
+      fullName.value = val.date;
+      phoneNumber.value = val.totalPay;
+    });
+    // creating and appending favorite image
+    let forFav = document.createElement("span");
+    let forFavorite = document.createElement("img");
+    forFavorite.id = "favoriteImg";
+    forFavorite.className = "favoriteImg";
+    forFavorite.src =listObj[trata].favorite? "assets/images/ic_unlike_24px.svg" : "file:///D:/phoneBook/assets/images/ic_like_24px.svg"
+    forFav.appendChild(forFavorite);
+
+    if (listObj[trata].favorite) {
+      forFavorite.classList.add("favoriteImgNot");
+    }
+
+    //event listener for favoriteImg
+    forFavorite.addEventListener("click", event => {
+      listObj[trata].favorite = !listObj[trata].favorite;
+      console.log("paspaudziau Favorite", trata);
+      //localStorage.setItem('localStoragePhoneBook', JSON.stringify(listObj));
+      //printObj();
+    });
+
+    // appending everything to pParagraph
+    forDate.textContent = val.date;
+    forTotalPay.textContent = val.totalPay;
+    liElement.appendChild(forDate);
+    liElement.appendChild(forTotalPay);
+    liElement.appendChild(forDelete);
+    liElement.appendChild(forFav);
+    outputs.appendChild(liElement);
+  });
+};
+
+
+
+function reloadPage(){
+  document.location.reload(true);
+};
+
+
+
+
 
 window.addEventListener('load', event => {
-  var fromLocalStorage = JSON.parse(localStorage.getItem('shortList'));
+
+  let fromLocalStorage = localStorage.getItem('listObj');
+  if (fromLocalStorage) {
+    listObj = JSON.parse(fromLocalStorage);
+    printObj();
+  }
   //everything for electricity
   let electricityFrom = parseFloat(document.getElementById("electricityFrom").value || 0);
   let electricityTo = parseFloat(document.getElementById("electricityTo").value || 0);
@@ -119,13 +191,12 @@ window.addEventListener('load', event => {
   totalPayResult.appendChild(totalPaySpan);
 });
 
-// function clearTotalPay() {
-//
-// }
+
 
 
 
 saveBnt.addEventListener("click", event => {
+  //reloadPage(); //perkrauna puslapi
   //si viena eilute leidzia priskirti tuscia reiksme paspaudus save mygtuka
   document.getElementById('totalPayResult').textContent = "";
   //everything for electricity
@@ -137,8 +208,6 @@ saveBnt.addEventListener("click", event => {
   let electricityResult = electricityDifference * electricityRate;
   let electricityOutput = document.getElementById("electricityResult");
 
-
-
   //everything for gas
   let gasFrom = parseFloat(document.getElementById("gasFrom").value || 0);
   let gasTo = parseFloat(document.getElementById("gasTo").value || 0);
@@ -147,13 +216,9 @@ saveBnt.addEventListener("click", event => {
   let gasResult = gasDifference * gasRate;
   let gasOutput = document.getElementById("gasResult");
 
-
-
   //everything for gas fixed padaryti
   let gasFixed = parseFloat(document.getElementById("gasFixed").value || 0);
   let gasFixedResult = document.getElementById("gasFixedResult");
-
-
 
   //everything for cold water
   let waterFrom = parseFloat(document.getElementById("waterFrom").value || 0);
@@ -163,31 +228,21 @@ saveBnt.addEventListener("click", event => {
   let waterResult = waterDifference * waterRate;
   let waterOutput = document.getElementById("waterResult");
 
-
-
   //everything for cold water fixed padaryti
   let waterFixed = parseFloat(document.getElementById("waterFixed").value || 0);
   let waterFixedResult = document.getElementById("waterFixedResult");
-
-
 
   //everything for other services
   let otherFixed = parseFloat(document.getElementById("otherFixed").value || 0);
   let otherFixedResult = document.getElementById("otherFixedResult");
 
-
-
   //everything for heating
   let heatingFixed = parseFloat(document.getElementById("heatingFixed").value || 0);
   let heatingFixedResult = document.getElementById("heatingFixedResult");
 
-
-
   //everything for internet
   let internetFixed = parseFloat(document.getElementById("internetFixed").value || 0);
   let internetFixedResult = document.getElementById("internetFixedResult");
-
-
 
   //everything for total pay
   let totalPayResult = document.getElementById("totalPayResult");
@@ -197,52 +252,35 @@ saveBnt.addEventListener("click", event => {
   totalPayResult.appendChild(totalPaySpan);
 
 
-
+  let dateOfSave = new Date().toString();
   //everything for showing final result below in the page
-  let outputs = document.getElementById("outputs");
-  let liElement = document.createElement("li");
-  let spanElement = document.createElement("span");
-  spanElement.textContent = `${new Date()} ---- ${totalPay}` + " €";
-  let deleteBtn = document.createElement("button");
-  let deleteBtnText = document.createTextNode("More");
-  deleteBtn.appendChild(deleteBtnText);
-  liElement.appendChild(spanElement).appendChild(deleteBtn);
-  outputs.appendChild(liElement);
-
-
-  let shortList = {
+  listObj.push({
+    date : dateOfSave,
+    totalPay: "€ " + totalPay,
     electricityFrom : electricityFrom,
     electricityTo : electricityTo,
     electricityDifference : electricityDifference,
     electricityRate : electricityRate,
     electricityResult : electricityResult,
-
     gasFrom : gasFrom,
     gasTo : gasTo,
     gasDifference : gasDifference,
     gasRate : gasRate,
     gasResult : gasResult,
-
     gasFixed : gasFixed,
-
     waterFrom : waterFrom,
     waterTo : waterTo,
     waterDifference : waterDifference,
     waterRate : waterRate,
     waterResult : waterResult,
-
     waterFixed : waterFixed,
-
     otherFixed : otherFixed,
-
     heatingFixed : heatingFixed,
-
     internetFixed : internetFixed,
+  });
+  printObj();
 
-    totalPay : totalPay,
-    date : new Date(),
-  };
-  localStorage.setItem('shortList', JSON.stringify(shortList));
+  localStorage.setItem('listObj', JSON.stringify(listObj));
 });
 
 
@@ -299,15 +337,87 @@ waterToInput.addEventListener("input", event => {
 
 
 
-
-
-
-
-
-
-
-
+//------------------------------------------------------------------------------
 
 
 
 console.log("The end --------------");
+/*
+//veikianti funkcija pries pradedant redaguoti
+function printObj() {
+  let outputs = document.getElementById("outputs");
+  outputs.innerHTML="";
+  listObj.forEach(function(val, trata) {
+    let liElement = document.createElement('li');
+    let forName = document.createElement('span');
+    let forPhone = document.createElement('span');
+
+
+    // Creating and appending delete button
+    let forDelete = document.createElement("span");
+    let deleteBtn = document.createElement("button");
+    let textOnTheButton = document.createTextNode("Delete");
+    deleteBtn.appendChild(textOnTheButton);
+    forDelete.appendChild(deleteBtn);
+
+
+    // event listener for delete button
+    deleteBtn.addEventListener("click", event => {
+      console.log("paspaudziau delete", trata);
+      listObj.splice(trata, 1);
+      printObj();
+      localStorage.setItem('listObj', JSON.stringify(listObj));
+    });
+
+
+    // Creating and appending edit button
+    let forEdit = document.createElement("span");
+    let editBtn = document.createElement("button");
+    let textOnTheEdit = document.createTextNode("Edit");
+    editBtn.appendChild(textOnTheEdit);
+    forDelete.appendChild(editBtn);
+
+    // event listener for edit button
+    editBtn.addEventListener("click", event => {
+      console.log("paspaudziau edit", trata);
+      editIndex = trata;
+      fullName.value = val.date;
+      phoneNumber.value = val.totalPay;
+    });
+
+
+    // creating and appending favorite image
+    let forFav = document.createElement("span");
+    let forFavorite = document.createElement("img");
+    forFavorite.id = "favoriteImg";
+    forFavorite.className = "favoriteImg";
+    forFavorite.src =listObj[trata].favorite? "assets/images/ic_unlike_24px.svg" : "file:///D:/phoneBook/assets/images/ic_like_24px.svg"
+    forFav.appendChild(forFavorite);
+
+    if (listObj[trata].favorite) {
+      forFavorite.classList.add("favoriteImgNot");
+    }
+
+    //event listener for favoriteImg
+    forFavorite.addEventListener("click", event => {
+      listObj[trata].favorite = !listObj[trata].favorite;
+
+      console.log("paspaudziau Favorite", trata);
+
+
+      //localStorage.setItem('localStoragePhoneBook', JSON.stringify(listObj));
+      //printObj();
+    });
+
+
+    // appending everything to pParagraph
+    forName.textContent = val.date;
+    forPhone.textContent = val.totalPay;
+    liElement.appendChild(forName);
+    liElement.appendChild(forPhone);
+    liElement.appendChild(forDelete);
+    liElement.appendChild(forFav);
+    outputs.appendChild(liElement);
+  });
+};
+*/

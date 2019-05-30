@@ -8,6 +8,8 @@ h1 {
   .row input {
     width: 100px;
     heigth: 30px; }
+  .row span {
+    padding-left: 30px; }
   .row button {
     margin-left: 20px;
     border-radius: 10px; }
@@ -15,5 +17,7 @@ h1 {
     color: red; }
   .row li {
     margin-bottom: 10px; }
+  .row-save {
+    margin-bottom: 40px; }
 
 /*# sourceMappingURL=style.css.map */
