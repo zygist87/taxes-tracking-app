@@ -4,29 +4,17 @@ let listObj = [];
 let editIndex = -1; //this is for "edit" button
 let electricityToInput = document.getElementById("electricityTo");
 let gasToInput = document.getElementById("gasTo");
+let gasFixedInput = document.getElementById("gasFixed");
 let waterToInput = document.getElementById("waterTo");
+let waterFixedInput = document.getElementById("waterFixed");
+let otherFixedInput = document.getElementById("otherFixed");
+let heatingFixedInput = document.getElementById("heatingFixed");
+let internetFixedInput = document.getElementById("internetFixed");
 let saveBtn = document.getElementById("saveBtn");
 let refreshBtn = document.getElementById("refreshBtn");
-//edit buttons
-let electricityEdit = document.getElementById("electricityEdit");
-let electricitySave = document.getElementById("electricitySave");
+
 //rate input
 let electricityRate = document.getElementById("electricityRate");
-
-
-electricityEdit.addEventListener("click", event => {
-  let x = document.getElementById("electricityRate").defaultValue;
-    //let bla = electricityRate.textContent = "";
-    console.log(x);
-    electricitySave.addEventListener("click", event => {
-      let y = document.getElementById("electricityRate").value;
-      console.log(y);
-      document.getElementById("electricityRate").defaultValue = y;
-    });
-});
-
-
-
 
 
   function afterReload() {
@@ -43,6 +31,37 @@ electricityEdit.addEventListener("click", event => {
     console.log(waterToFromLastObject);
     document.getElementById("waterFrom").value = waterToFromLastObject;
   };
+
+
+  function ratesFromLocalStorage() {
+    //electricityRate
+    let fromLocal = JSON.parse(localStorage.getItem("listObj"));
+    let electricityRateFromLastObject = fromLocal[fromLocal.length - 1].electricityRate;
+    document.getElementById("electricityRate").value = electricityRateFromLastObject;
+    //gasRate
+    let gasRateFromLastObject = fromLocal[fromLocal.length - 1].gasRate;
+    document.getElementById("gasRate").value = gasRateFromLastObject;
+    //gasFixedRate
+    let gasFixedFromLastObject = fromLocal[fromLocal.length - 1].gasFixed;
+    document.getElementById("gasFixed").value = gasFixedFromLastObject;
+    // //waterRate
+    let waterRateFromLastObject = fromLocal[fromLocal.length - 1].waterRate;
+    document.getElementById("waterRate").value = waterRateFromLastObject;
+    //waterFixedRate
+    let waterFixedFromLastObject = fromLocal[fromLocal.length - 1].waterFixed;
+    document.getElementById("waterFixed").value = waterFixedFromLastObject;
+    //otherFixedRate
+    let otherFixedFromLastObject = fromLocal[fromLocal.length - 1].otherFixed;
+    document.getElementById("otherFixed").value = otherFixedFromLastObject;
+    //heatingFixedRate
+    let heatingFixedFromLastObject = fromLocal[fromLocal.length - 1].heatingFixed;
+    document.getElementById("heatingFixed").value = heatingFixedFromLastObject;
+    //internetFixedRate
+    let internetFixedFromLastObject = fromLocal[fromLocal.length - 1].internetFixed;
+    document.getElementById("internetFixed").value = internetFixedFromLastObject;
+  };
+
+
 
 
 function doesItHasValue(x) {
@@ -127,10 +146,13 @@ window.addEventListener('load', event => {
     listObj = JSON.parse(fromLocalStorage);
     printObj();
   }
+  ratesFromLocalStorage();
   //everything for electricity
   let electricityFrom = parseFloat(document.getElementById("electricityFrom").value || 0);
   let electricityTo = parseFloat(document.getElementById("electricityTo").value || 0);
   let electricityRate = document.getElementById("electricityRate").value;
+
+
   let electricityDifference = electricityTo - electricityFrom;
   document.getElementById("electricityDifference").value = electricityDifference;
   let electricityResult = electricityDifference * electricityRate;
@@ -156,7 +178,7 @@ window.addEventListener('load', event => {
 
 
 
-  //everything for gas fixed padaryti
+  //everything for gas fixed
   let gasFixed = parseFloat(document.getElementById("gasFixed").value || 0);
   let gasFixedResult = document.getElementById("gasFixedResult");
   let gasFixedSpan = document.createElement("span");
@@ -179,14 +201,12 @@ window.addEventListener('load', event => {
   waterOutput.appendChild(waterSpan);
 
 
-
   //everything for cold water fixed padaryti
   let waterFixed = parseFloat(document.getElementById("waterFixed").value || 0);
   let waterFixedResult = document.getElementById("waterFixedResult");
   let waterFixedSpan = document.createElement("span");
   waterFixedSpan.textContent = "€ " + waterFixed;
   waterFixedResult.appendChild(waterFixedSpan);
-
 
 
   //everything for other services
@@ -197,14 +217,12 @@ window.addEventListener('load', event => {
   otherFixedResult.appendChild(otherFixedSpan);
 
 
-
   //everything for heating
   let heatingFixed = parseFloat(document.getElementById("heatingFixed").value || 0);
   let heatingFixedResult = document.getElementById("heatingFixedResult");
   let heatingFixedSpan = document.createElement("span");
   heatingFixedSpan.textContent = "€ " + heatingFixed;
   heatingFixedResult.appendChild(heatingFixedSpan);
-
 
 
   //everything for internet
@@ -286,7 +304,8 @@ saveBnt.addEventListener("click", event => {
   totalPayResult.appendChild(totalPaySpan);
 
 
-  let dateOfSave = new Date().toString();
+  let dateOfSaveFull = new Date(); //.toString();
+  let dateOfSave = dateOfSaveFull.getFullYear() + "-" + (dateOfSaveFull.getMonth() + 1) + "-" + dateOfSaveFull.getDate() + " " + dateOfSaveFull.getHours() + ":" + dateOfSaveFull.getMinutes() + ":" + dateOfSaveFull.getSeconds();
   //everything for showing final result below in the page
   listObj.push({
     date : dateOfSave,
@@ -355,6 +374,17 @@ gasToInput.addEventListener("input", event => {
   gasOutput.appendChild(gasSpan);
 });
 
+gasFixedInput.addEventListener("input", event => {
+  document.getElementById('gasFixedResult').textContent = "";
+  //everything for gas fixed
+  let gasFixed = document.getElementById("gasFixed").value;
+  let gasFixedResult = (gasFixed * 1).toFixed(2);
+  let gasFixedOutput = document.getElementById("gasFixedResult");
+  let gasFixedSpan = document.createElement("span");
+  gasFixedSpan.textContent = "€ " + gasFixedResult;
+  gasFixedOutput.appendChild(gasFixedSpan);
+});
+
 
 waterToInput.addEventListener("input", event => {
   document.getElementById("waterResult").textContent = "";
@@ -371,7 +401,49 @@ waterToInput.addEventListener("input", event => {
   waterOutput.appendChild(waterSpan);
 });
 
+waterFixedInput.addEventListener("input", event => {
+  document.getElementById('waterFixedResult').textContent = "";
+//everything for water fixed
+let waterFixed = document.getElementById("waterFixed").value;
+let waterFixedResult = (waterFixed * 1).toFixed(2);
+let waterFixedOutput = document.getElementById("waterFixedResult");
+let waterFixedSpan = document.createElement("span");
+waterFixedSpan.textContent = "€ " + waterFixedResult;
+waterFixedOutput.appendChild(waterFixedSpan);
+});
 
+otherFixedInput.addEventListener("input", event => {
+  document.getElementById('otherFixedResult').textContent = "";
+//everything for water fixed
+let otherFixed = document.getElementById("otherFixed").value;
+let otherFixedResult = (otherFixed * 1).toFixed(2);
+let otherFixedOutput = document.getElementById("otherFixedResult");
+let otherFixedSpan = document.createElement("span");
+otherFixedSpan.textContent = "€ " + otherFixedResult;
+otherFixedOutput.appendChild(otherFixedSpan);
+});
+
+heatingFixedInput.addEventListener("input", event => {
+  document.getElementById('heatingFixedResult').textContent = "";
+//everything for heating fixed
+let heatingFixed = document.getElementById("heatingFixed").value;
+let heatingFixedResult = (heatingFixed * 1).toFixed(2);
+let heatingFixedOutput = document.getElementById("heatingFixedResult");
+let heatingFixedSpan = document.createElement("span");
+heatingFixedSpan.textContent = "€ " + heatingFixedResult;
+heatingFixedOutput.appendChild(heatingFixedSpan);
+});
+
+internetFixedInput.addEventListener("input", event => {
+  document.getElementById('internetFixedResult').textContent = "";
+//everything for internet fixed
+let internetFixed = document.getElementById("internetFixed").value;
+let internetFixedResult = (internetFixed * 1).toFixed(2);
+let internetFixedOutput = document.getElementById("internetFixedResult");
+let internetFixedSpan = document.createElement("span");
+internetFixedSpan.textContent = "€ " + internetFixedResult;
+internetFixedOutput.appendChild(internetFixedSpan);
+});
 
 //------------------------------------------------------------------------------
 
