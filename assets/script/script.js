@@ -12,9 +12,11 @@ let heatingFixedInput = document.getElementById("heatingFixed");
 let internetFixedInput = document.getElementById("internetFixed");
 let saveBtn = document.getElementById("saveBtn");
 let refreshBtn = document.getElementById("refreshBtn");
-
-//rate input
 let electricityRate = document.getElementById("electricityRate");
+
+
+
+
 
 
   function afterReload() {
@@ -63,13 +65,22 @@ let electricityRate = document.getElementById("electricityRate");
 
 
 
-
 function doesItHasValue(x) {
   if (typeof x !== "number") {
     return 0;
   }
   return x;
 };
+
+
+
+
+
+
+
+
+
+
 
 
 function printObj() {
@@ -92,19 +103,116 @@ function printObj() {
       printObj();
       localStorage.setItem('listObj', JSON.stringify(listObj));
     });
-    // Creating and appending edit button
+
+
+
+
+    // Creating and appending more button
     let forEdit = document.createElement("span");
-    let editBtn = document.createElement("button");
-    let textOnTheEdit = document.createTextNode("Edit");
-    editBtn.appendChild(textOnTheEdit);
-    forDelete.appendChild(editBtn);
+    let moreBtn = document.createElement("button");
+    let textOnTheEdit = document.createTextNode("Show More");
+    moreBtn.appendChild(textOnTheEdit);
+    forDelete.appendChild(moreBtn);
     // event listener for edit button
-    editBtn.addEventListener("click", event => {
-      console.log("paspaudziau edit", trata);
-      editIndex = trata;
-      fullName.value = val.date;
-      phoneNumber.value = val.totalPay;
+    moreBtn.addEventListener("click", event => {
+      let fromLocal = JSON.parse(localStorage.getItem("listObj"));
+
+      console.log("paspaudziau more", trata);
+
+        let electricityFrom = fromLocal[trata].electricityFrom;
+        let electricityTo = fromLocal[trata].electricityTo;
+        let electricityDifference = fromLocal[trata].electricityDifference;
+        let electricityRate = fromLocal[trata].electricityRate;
+        let electricityResult = fromLocal[trata].electricityResult;
+        let moreElectricity = document.createElement("p");
+        moreElectricity.textContent="Electricity From: " + electricityFrom + " Electricity To: " + electricityTo + " Electricity Difference: " + electricityDifference + " Electricity Rate: " + electricityRate + "€ " + " Electricity Total Pay: " + electricityResult + "€ ";
+        console.log(electricityResult);
+        liElement.appendChild(moreElectricity);
+
+        let gasFrom = fromLocal[trata].gasFrom;
+        let gasTo = fromLocal[trata].gasTo;
+        let gasDifference = fromLocal[trata].gasDifference;
+        let gasRate = fromLocal[trata].gasRate;
+        let gasResult = fromLocal[trata].gasResult;
+        let moreGas = document.createElement("p");
+        moreGas.textContent="Gas From: " + gasFrom + " Gas To: " + gasTo + " Gas Difference: " + gasDifference + " Gas Rate: " + gasRate + "€ " + " Gas Total Pay: " + gasResult + "€ ";
+        liElement.appendChild(moreGas);
+
+        let gasFixedResult = fromLocal[trata].gasFixedResult;
+        let moreGasFixed = document.createElement("p");
+        moreGasFixed.textContent="Gas Fixed Part: " + gasResult + "€ ";
+        liElement.appendChild(moreGasFixed);
+
+        let waterFrom = fromLocal[trata].waterFrom;
+        let waterTo = fromLocal[trata].waterTo;
+        let waterDifference = fromLocal[trata].waterDifference;
+        let waterRate = fromLocal[trata].waterRate;
+        let waterResult = fromLocal[trata].waterResult;
+        let moreWater = document.createElement("p");
+        moreWater.textContent="Water From: " + waterFrom + " Water To: " + waterTo + " Water Difference: " + waterDifference + " Water Rate: " + waterRate + "€ " + " Water Total Pay: " + waterResult + "€ ";
+        liElement.appendChild(moreWater);
+
+        let waterFixed = fromLocal[trata].waterFixed;
+        let moreWaterFixed = document.createElement("p");
+        moreWaterFixed.textContent="Water Fixed Part: " + waterFixed + "€ ";
+        liElement.appendChild(moreWaterFixed);
+
+        let otherFixed = fromLocal[trata].otherFixed;
+        let moreOther = document.createElement("p");
+        moreOther.textContent="Other Fixed Part: " + otherFixed + "€ ";
+        liElement.appendChild(moreOther);
+
+        let heatingFixed = fromLocal[trata].heatingFixed;
+        let moreHeating = document.createElement("p");
+        moreHeating.textContent="Heating Fixed Part: " + heatingFixed + "€ ";
+        liElement.appendChild(moreHeating);
+
+        let internetFixed = fromLocal[trata].internetFixed;
+        let moreInternet = document.createElement("p");
+        moreInternet.textContent="Internet Fixed Part: " + internetFixed + "€ ";
+        liElement.appendChild(moreInternet);
+
+        let totalPay = fromLocal[trata].totalPay;
+        let moreTotal = document.createElement("p");
+        let moreTotalH5 = document.createElement("h6");
+        moreTotal.appendChild(moreTotalH5);
+        moreTotalH5.textContent="Total Pay: " + totalPay + "€ ";
+        liElement.appendChild(moreTotal);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      //cia uzkomentinau ir toliau pradesiu keisti viska
+      // editIndex = trata;
+      // fullName.value = val.date;
+      // phoneNumber.value = val.totalPay;
     });
+
+
+
+
+
+
     // creating and appending favorite image
     let forFav = document.createElement("span");
     let forFavorite = document.createElement("img");
@@ -125,7 +233,7 @@ function printObj() {
       //printObj();
     });
 
-    // appending everything to pParagraph
+    // appending everything to liElement
     forDate.textContent = val.date;
     forTotalPay.textContent = val.totalPay;
     liElement.appendChild(forDate);
@@ -135,6 +243,27 @@ function printObj() {
     outputs.appendChild(liElement);
   });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

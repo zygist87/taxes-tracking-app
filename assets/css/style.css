@@ -15,6 +15,9 @@ h1 {
     border-radius: 10px; }
   .row h5 {
     color: red; }
+  .row h6 {
+    color: red;
+    font-size: 24px; }
   .row li {
     margin-bottom: 10px; }
   .row-save {
