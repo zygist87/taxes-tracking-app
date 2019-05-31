@@ -73,16 +73,6 @@ function doesItHasValue(x) {
 };
 
 
-
-
-
-
-
-
-
-
-
-
 function printObj() {
   let outputs = document.getElementById("outputs");
   outputs.innerHTML="";
@@ -180,58 +170,8 @@ function printObj() {
         liElement.appendChild(moreTotal);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      //cia uzkomentinau ir toliau pradesiu keisti viska
-      // editIndex = trata;
-      // fullName.value = val.date;
-      // phoneNumber.value = val.totalPay;
     });
 
-
-
-
-
-
-    // creating and appending favorite image
-    let forFav = document.createElement("span");
-    let forFavorite = document.createElement("img");
-    forFavorite.id = "favoriteImg";
-    forFavorite.className = "favoriteImg";
-    forFavorite.src =listObj[trata].favorite? "assets/images/ic_unlike_24px.svg" : "file:///D:/phoneBook/assets/images/ic_like_24px.svg"
-    forFav.appendChild(forFavorite);
-
-    if (listObj[trata].favorite) {
-      forFavorite.classList.add("favoriteImgNot");
-    }
-
-    //event listener for favoriteImg
-    forFavorite.addEventListener("click", event => {
-      listObj[trata].favorite = !listObj[trata].favorite;
-      console.log("paspaudziau Favorite", trata);
-      //localStorage.setItem('localStoragePhoneBook', JSON.stringify(listObj));
-      //printObj();
-    });
 
     // appending everything to liElement
     forDate.textContent = val.date;
@@ -239,30 +179,10 @@ function printObj() {
     liElement.appendChild(forDate);
     liElement.appendChild(forTotalPay);
     liElement.appendChild(forDelete);
-    liElement.appendChild(forFav);
+
     outputs.appendChild(liElement);
   });
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -574,8 +494,24 @@ internetFixedSpan.textContent = "€ " + internetFixedResult;
 internetFixedOutput.appendChild(internetFixedSpan);
 });
 
-//------------------------------------------------------------------------------
-
-
-
 console.log("The end --------------");
+/*
+    // creating and appending favorite image
+    let forFav = document.createElement("span");
+    let forFavorite = document.createElement("img");
+    forFavorite.id = "favoriteImg";
+    forFavorite.className = "favoriteImg";
+    forFavorite.src =listObj[trata].favorite? "assets/images/ic_unlike_24px.svg" : "file:///D:/phoneBook/assets/images/ic_like_24px.svg"
+    forFav.appendChild(forFavorite);
+//liElement.appendChild(forFav);
+    if (listObj[trata].favorite) {
+      forFavorite.classList.add("favoriteImgNot");
+    }
+
+    //event listener for favoriteImg
+    forFavorite.addEventListener("click", event => {
+      listObj[trata].favorite = !listObj[trata].favorite;
+      console.log("paspaudziau Favorite", trata);
+
+    });
+*/
