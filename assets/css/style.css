@@ -16,11 +16,15 @@ h1 {
   .row h5 {
     color: red; }
   .row h6 {
-    color: red;
+    color: black;
     font-size: 24px; }
   .row li {
     margin-bottom: 10px; }
   .row-save {
     margin-bottom: 40px; }
+  .row .more {
+    background-color: orange; }
+  .row .less {
+    background-color: red; }
 
 /*# sourceMappingURL=style.css.map */

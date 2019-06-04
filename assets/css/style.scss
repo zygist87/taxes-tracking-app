@@ -20,7 +20,7 @@ h1 {
     color: red;
   }
   h6 {
-    color: red;
+    color: black;
     font-size: 24px;
   }
   li {
@@ -28,5 +28,12 @@ h1 {
   }
   &-save {
     margin-bottom: 40px;
+  }
+  .more {
+    background-color: orange;
+  }
+  .less {
+    //display: none;
+    background-color: red;
   }
 }
