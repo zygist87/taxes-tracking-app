@@ -13,10 +13,8 @@ let internetFixedInput = document.getElementById("internetFixed");
 let saveBtn = document.getElementById("saveBtn");
 let refreshBtn = document.getElementById("refreshBtn");
 let electricityRate = document.getElementById("electricityRate");
-
-
-
-
+let gasRate = document.getElementById("gasRate");
+let waterRate = document.getElementById("waterRate");
 
 
   function afterReload() {
@@ -65,18 +63,19 @@ let electricityRate = document.getElementById("electricityRate");
 
 
 
-function doesItHasValue(x) {
-  if (typeof x !== "number") {
-    return 0;
-  }
-  return x;
-};
+  function doesItHasValue(x) {
+    if (typeof x !== "number") {
+      return 0;
+    }
+      return x;
+    };
 
+    let showMoreindex = -1;
+    function printObj() {
+      let outputs = document.getElementById("outputs");
+      outputs.innerHTML="";
 
-function printObj() {
-  let outputs = document.getElementById("outputs");
-  outputs.innerHTML="";
-  listObj.forEach(function(val, trata) {
+      listObj.forEach(function(val, trata) {
     let liElement = document.createElement('li');
     let forDate = document.createElement('span');
     let forTotalPay = document.createElement('span');
@@ -96,79 +95,25 @@ function printObj() {
 
 
 
-
     // Creating and appending more button
     let forEdit = document.createElement("span");
     let moreBtn = document.createElement("button");
-    let textOnTheEdit = document.createTextNode("Show More");
+    let textOnTheEdit = document.createTextNode(showMoreindex !== trata? "Show More" : "Show Less");
     moreBtn.appendChild(textOnTheEdit);
     forDelete.appendChild(moreBtn);
-    // event listener for edit button
+
     moreBtn.addEventListener("click", event => {
-      let fromLocal = JSON.parse(localStorage.getItem("listObj"));
 
-      console.log("paspaudziau more", trata);
-
-        let electricityFrom = fromLocal[trata].electricityFrom;
-        let electricityTo = fromLocal[trata].electricityTo;
-        let electricityDifference = fromLocal[trata].electricityDifference;
-        let electricityRate = fromLocal[trata].electricityRate;
-        let electricityResult = fromLocal[trata].electricityResult;
-        let moreElectricity = document.createElement("p");
-        moreElectricity.textContent="Electricity From: " + electricityFrom + " Electricity To: " + electricityTo + " Electricity Difference: " + electricityDifference + " Electricity Rate: " + electricityRate + "€ " + " Electricity Total Pay: " + electricityResult + "€ ";
-        console.log(electricityResult);
-        liElement.appendChild(moreElectricity);
-
-        let gasFrom = fromLocal[trata].gasFrom;
-        let gasTo = fromLocal[trata].gasTo;
-        let gasDifference = fromLocal[trata].gasDifference;
-        let gasRate = fromLocal[trata].gasRate;
-        let gasResult = fromLocal[trata].gasResult;
-        let moreGas = document.createElement("p");
-        moreGas.textContent="Gas From: " + gasFrom + " Gas To: " + gasTo + " Gas Difference: " + gasDifference + " Gas Rate: " + gasRate + "€ " + " Gas Total Pay: " + gasResult + "€ ";
-        liElement.appendChild(moreGas);
-
-        let gasFixedResult = fromLocal[trata].gasFixedResult;
-        let moreGasFixed = document.createElement("p");
-        moreGasFixed.textContent="Gas Fixed Part: " + gasResult + "€ ";
-        liElement.appendChild(moreGasFixed);
-
-        let waterFrom = fromLocal[trata].waterFrom;
-        let waterTo = fromLocal[trata].waterTo;
-        let waterDifference = fromLocal[trata].waterDifference;
-        let waterRate = fromLocal[trata].waterRate;
-        let waterResult = fromLocal[trata].waterResult;
-        let moreWater = document.createElement("p");
-        moreWater.textContent="Water From: " + waterFrom + " Water To: " + waterTo + " Water Difference: " + waterDifference + " Water Rate: " + waterRate + "€ " + " Water Total Pay: " + waterResult + "€ ";
-        liElement.appendChild(moreWater);
-
-        let waterFixed = fromLocal[trata].waterFixed;
-        let moreWaterFixed = document.createElement("p");
-        moreWaterFixed.textContent="Water Fixed Part: " + waterFixed + "€ ";
-        liElement.appendChild(moreWaterFixed);
-
-        let otherFixed = fromLocal[trata].otherFixed;
-        let moreOther = document.createElement("p");
-        moreOther.textContent="Other Fixed Part: " + otherFixed + "€ ";
-        liElement.appendChild(moreOther);
-
-        let heatingFixed = fromLocal[trata].heatingFixed;
-        let moreHeating = document.createElement("p");
-        moreHeating.textContent="Heating Fixed Part: " + heatingFixed + "€ ";
-        liElement.appendChild(moreHeating);
-
-        let internetFixed = fromLocal[trata].internetFixed;
-        let moreInternet = document.createElement("p");
-        moreInternet.textContent="Internet Fixed Part: " + internetFixed + "€ ";
-        liElement.appendChild(moreInternet);
-
-        let totalPay = fromLocal[trata].totalPay;
-        let moreTotal = document.createElement("p");
-        let moreTotalH5 = document.createElement("h6");
-        moreTotal.appendChild(moreTotalH5);
-        moreTotalH5.textContent="Total Pay: " + totalPay + "€ ";
-        liElement.appendChild(moreTotal);
-
+      console.log("paspaudziau more", val, trata);
+        if (showMoreindex != -1) {
+          console.log("nesutampa su -1");
+          showMoreindex = -1;
+          console.log("turetu pasikeisti index");
+        } else {
+          console.log("sutampa su -1");
+          showMoreindex = trata;
+        };
+        printObj();
 
     });
 
@@ -181,6 +126,88 @@ function printObj() {
     liElement.appendChild(forDelete);
 
     outputs.appendChild(liElement);
+
+    if (showMoreindex === trata) {
+      let fromLocal = JSON.parse(localStorage.getItem("listObj"));
+      console.log("show more");
+      let forMoreOfEverything = document.createElement("div");
+      forMoreOfEverything.id = "more";
+
+      let electricityFrom = fromLocal[trata].electricityFrom;
+      let electricityTo = fromLocal[trata].electricityTo;
+      let electricityDifference = fromLocal[trata].electricityDifference;
+      let electricityRate = fromLocal[trata].electricityRate;
+      let electricityResult = fromLocal[trata].electricityResult;
+      let moreElectricity = document.createElement("p");
+      //moreElectricity.id = "more";
+      moreElectricity.className = "more";
+      moreElectricity.textContent="Electricity From: " + electricityFrom + " Electricity To: " + electricityTo + " Electricity Difference: " + electricityDifference + " Electricity Rate: " + electricityRate + "€ " + " Electricity Total Pay: " + electricityResult + "€ ";
+      forMoreOfEverything.appendChild(moreElectricity);
+      liElement.appendChild(forMoreOfEverything);
+
+      let gasFrom = fromLocal[trata].gasFrom;
+      let gasTo = fromLocal[trata].gasTo;
+      let gasDifference = fromLocal[trata].gasDifference;
+      let gasRate = fromLocal[trata].gasRate;
+      let gasResult = fromLocal[trata].gasResult;
+      let moreGas = document.createElement("p");
+      moreGas.className = "more";
+      moreGas.id = "more";
+      moreGas.textContent="Gas From: " + gasFrom + " Gas To: " + gasTo + " Gas Difference: " + gasDifference + " Gas Rate: " + gasRate + "€ " + " Gas Total Pay: " + gasResult + "€ ";
+      forMoreOfEverything.appendChild(moreGas);
+      liElement.appendChild(forMoreOfEverything);
+
+      let gasFixedResult = fromLocal[trata].gasFixedResult;
+      let moreGasFixed = document.createElement("p");
+      moreGasFixed.className = "more";
+      moreGasFixed.textContent="Gas Fixed Part: " + gasResult + "€ ";
+      forMoreOfEverything.appendChild(moreGasFixed);
+      liElement.appendChild(forMoreOfEverything);
+
+      let waterFrom = fromLocal[trata].waterFrom;
+      let waterTo = fromLocal[trata].waterTo;
+      let waterDifference = fromLocal[trata].waterDifference;
+      let waterRate = fromLocal[trata].waterRate;
+      let waterResult = fromLocal[trata].waterResult;
+      let moreWater = document.createElement("p");
+      moreWater.className = "more";
+      moreWater.textContent="Water From: " + waterFrom + " Water To: " + waterTo + " Water Difference: " + waterDifference + " Water Rate: " + waterRate + "€ " + " Water Total Pay: " + waterResult + "€ ";
+      forMoreOfEverything.appendChild(moreWater);
+      liElement.appendChild(forMoreOfEverything);
+
+      let waterFixed = fromLocal[trata].waterFixed;
+      let moreWaterFixed = document.createElement("p");
+      moreWaterFixed.className = "more";
+      moreWaterFixed.textContent="Water Fixed Part: " + waterFixed + "€ ";
+      forMoreOfEverything.appendChild(moreWaterFixed);
+      liElement.appendChild(forMoreOfEverything);
+
+      let otherFixed = fromLocal[trata].otherFixed;
+      let moreOther = document.createElement("p");
+      moreOther.className = "more";
+      moreOther.textContent="Other Fixed Part: " + otherFixed + "€ ";
+      liElement.appendChild(moreOther);
+
+      let heatingFixed = fromLocal[trata].heatingFixed;
+      let moreHeating = document.createElement("p");
+      moreHeating.className = "more";
+      moreHeating.textContent="Heating Fixed Part: " + heatingFixed + "€ ";
+      liElement.appendChild(moreHeating);
+
+      let internetFixed = fromLocal[trata].internetFixed;
+      let moreInternet = document.createElement("p");
+      moreInternet.className = "more";
+      moreInternet.textContent="Internet Fixed Part: " + internetFixed + "€ ";
+      liElement.appendChild(moreInternet);
+
+      let totalPay = fromLocal[trata].totalPay;
+      let moreTotal = document.createElement("p");
+      moreTotal.className = "more";
+      let moreTotalH5 = document.createElement("h6");
+      moreTotal.appendChild(moreTotalH5);
+      moreTotalH5.textContent="Total Pay: " + totalPay + "€ ";
+      liElement.appendChild(moreTotal);
+    }
   });
 };
 
@@ -297,7 +324,7 @@ window.addEventListener('load', event => {
 
 
 saveBnt.addEventListener("click", event => {
-  //reloadPage(); //perkrauna puslapi
+
   //si viena eilute leidzia priskirti tuscia reiksme paspaudus save mygtuka
   document.getElementById('totalPayResult').textContent = "";
   //everything for electricity
@@ -379,6 +406,7 @@ saveBnt.addEventListener("click", event => {
     otherFixed : otherFixed,
     heatingFixed : heatingFixed,
     internetFixed : internetFixed,
+    isSelected: true,
   });
   printObj();
 
@@ -407,8 +435,38 @@ electricityToInput.addEventListener("input", event => {
   electricityOutput.appendChild(electricitySpan);
 });
 
+//-------
+electricityRate.addEventListener("input", event => {
+  document.getElementById("electricityResult").textContent = "";
+  let electricityFrom = parseFloat(document.getElementById("electricityFrom").value || 0);
+  let electricityTo = parseFloat(document.getElementById("electricityTo").value || 0);
+  let electricityRate = document.getElementById("electricityRate").value;
+  let electricityDifference = electricityTo - electricityFrom;
+  document.getElementById("electricityDifference").value = electricityDifference;
+  let electricityResult = (electricityDifference * electricityRate).toFixed(2);
+  let electricityOutput = document.getElementById("electricityResult");
+  let electricitySpan = document.createElement("span");
+  electricitySpan.textContent = "€ " + electricityResult;
+  electricityOutput.appendChild(electricitySpan);
+});
+
 
 gasToInput.addEventListener("input", event => {
+  document.getElementById('gasResult').textContent = "";
+  //everything for gas
+  let gasFrom = parseFloat(document.getElementById("gasFrom").value || 0);
+  let gasTo = parseFloat(document.getElementById("gasTo").value || 0);
+  let gasRate = document.getElementById("gasRate").value;
+  let gasDifference = gasTo - gasFrom;
+  document.getElementById("gasDifference").value = gasDifference;
+  let gasResult = (gasDifference * gasRate).toFixed(2);
+  let gasOutput = document.getElementById("gasResult");
+  let gasSpan = document.createElement("span");
+  gasSpan.textContent = "€ " + gasResult;
+  gasOutput.appendChild(gasSpan);
+});
+
+gasRate.addEventListener("input", event => {
   document.getElementById('gasResult').textContent = "";
   //everything for gas
   let gasFrom = parseFloat(document.getElementById("gasFrom").value || 0);
@@ -449,6 +507,23 @@ waterToInput.addEventListener("input", event => {
   waterSpan.textContent = "€ " + waterResult;
   waterOutput.appendChild(waterSpan);
 });
+
+waterRate.addEventListener("input", event => {
+  document.getElementById("waterResult").textContent = "";
+  //everything for cold water
+  let waterFrom = parseFloat(document.getElementById("waterFrom").value || 0);
+  let waterTo = parseFloat(document.getElementById("waterTo").value || 0);
+  let waterRate = document.getElementById("waterRate").value;
+  let waterDifference = waterTo - waterFrom;
+  document.getElementById("waterDifference").value = waterDifference;
+  let waterResult = (waterDifference * waterRate).toFixed(2);
+  let waterOutput = document.getElementById("waterResult");
+  let waterSpan = document.createElement("span");
+  waterSpan.textContent = "€ " + waterResult;
+  waterOutput.appendChild(waterSpan);
+});
+
+
 
 waterFixedInput.addEventListener("input", event => {
   document.getElementById('waterFixedResult').textContent = "";
@@ -495,23 +570,3 @@ internetFixedOutput.appendChild(internetFixedSpan);
 });
 
 console.log("The end --------------");
-/*
-    // creating and appending favorite image
-    let forFav = document.createElement("span");
-    let forFavorite = document.createElement("img");
-    forFavorite.id = "favoriteImg";
-    forFavorite.className = "favoriteImg";
-    forFavorite.src =listObj[trata].favorite? "assets/images/ic_unlike_24px.svg" : "file:///D:/phoneBook/assets/images/ic_like_24px.svg"
-    forFav.appendChild(forFavorite);
-//liElement.appendChild(forFav);
-    if (listObj[trata].favorite) {
-      forFavorite.classList.add("favoriteImgNot");
-    }
-
-    //event listener for favoriteImg
-    forFavorite.addEventListener("click", event => {
-      listObj[trata].favorite = !listObj[trata].favorite;
-      console.log("paspaudziau Favorite", trata);
-
-    });
-*/
